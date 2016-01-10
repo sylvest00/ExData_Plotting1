@@ -90,7 +90,7 @@ dT4$Global_reactive_power <- as.numeric(dT4$Global_reactive_power)
 #### Generate Plots in Figure ####
 
 # Open PNG graphics device
-png("plot4.png",width=480,height=480)
+png("plot4.png",width=480,height=480,bg="transparent")
 
 # Initialize query for graphical objects
 par(mfrow = c(2,2))

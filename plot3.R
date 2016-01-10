@@ -80,7 +80,7 @@ x <- minPerDay*as.numeric(times(dT$Time))
 x[day2_idx] <- x[day2_idx] + minPerDay 
 
 # Open the PNG graphics device
-png("plot3.png",width=480,height=480)
+png("plot3.png",width=480,height=480,bg="transparent")
 
 # Plot of sub metering 1 vs. time
 plot(x,dT$Sub_metering_1,
