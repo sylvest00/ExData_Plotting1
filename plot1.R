@@ -5,12 +5,8 @@
 #     plot1.R loads a UCI data set that contains information about power consumption of one
 #     household and plots a histogram of the global active power from January 1-2 in 2007.
 #
-#     As described on the UCI website, global active power is in kilowatts. The data set
-#     ranges from 74-3692 kilowatts. However, the data in the "target" figure posted by
-#     the course instructors is divided by 500.The data here was also divied by 500 in
-#     order to match their work.
 #
-#     github/sylvest00, 2015
+#     github/sylvest00, 2016
 ###########################################################################################
 
 # Clear the workspace and close any existing figures
@@ -19,7 +15,7 @@ graphics.off()
 
 
 # Read in the power consumption data set that is saved to the working directry
-dataTableOriginal <- read.table("household_power_consumption.txt", sep=";",header=TRUE)
+dataTableOriginal <- read.table("household_power_consumption.txt", sep=";",header=TRUE, stringsAsFactors = FALSE)
 dT <- dataTableOriginal
 
 
@@ -38,9 +34,9 @@ dT <- dT[idx,]
 png("plot1.png",width=480,height=480,bg="transparent")
 
 # Generate histogram using the base plot function 'hist'
-hist(as.numeric(dT$Global_active_power)/500,
+hist(as.numeric(dT$Global_active_power),
      main = "Global Active Power Histogram",
-     xlab = "Global Active Power (Kilowatts / 500)",
+     xlab = "Global Active Power (Kilowatts)",
      xlim = c(0,8),
      ylim = c(0,1400),
      las = 1,

@@ -5,12 +5,9 @@
 #     plot3.R loads a UCI data set that contains information about power consumption of one
 #     household and generates a plot of sub meter values vs. day from January 1-2 in 2007.
 #
-#     The values under "sub_metering_2" were divided by 5 in order to match the range of
-#     the y-axis of the figure created by the instructor.
-#
 #     Libraries required: chron
 #
-#     github/sylvest00, 2015
+#     github/sylvest00, 2016
 ###########################################################################################
 
 
@@ -24,7 +21,7 @@ library(chron)
 
 
 # Read in data from a TXT file and store values in a table
-dataTableOriginal <- read.table("household_power_consumption.txt", sep=";",header=TRUE)
+dataTableOriginal <- read.table("household_power_consumption.txt", sep=";",header=TRUE, stringsAsFactors = FALSE)
 dT <- dataTableOriginal
 
 
@@ -47,28 +44,13 @@ dT$Sub_metering_2 <- as.numeric(dT$Sub_metering_2)
 dT$Sub_metering_3 <- as.numeric(dT$Sub_metering_3)
 
 
-# Zeroing the sub metered values
+# Find range for y axis
 lineRange1 <- matrix(range(dT$Sub_metering_1), ncol = 2)
 lineRange2 <- matrix(range(dT$Sub_metering_2), ncol = 2)
 lineRange3 <- matrix(range(dT$Sub_metering_3), ncol = 2)
 lineRange0 <- rbind(lineRange1,lineRange2,lineRange3)
 lineRange <- c(min(lineRange0),max(lineRange0))
-idx <- which(lineRange0[,1] != 0)
-for(i in 1:3)
-{
-  if(i %in% idx)
-  {
-    dT[,i+2] <- dT[,i+2] - lineRange0[i,1]
-  }
-}
 
-  
-# Determining the range for ylim of the plot
-lineRange1 <- matrix(range(dT$Sub_metering_1), ncol = 2)
-lineRange2 <- matrix(range(dT$Sub_metering_2), ncol = 2)
-lineRange3 <- matrix(range(dT$Sub_metering_3), ncol = 2)
-lineRange0 <- rbind(lineRange1,lineRange2,lineRange3)
-lineRange <- c(min(lineRange0),max(lineRange0))
 
 # Generate x values so that the data is ordered properly and the
 # x-axis labels are easily manipulable. Here, they are converted
@@ -79,8 +61,10 @@ minPerDay <- 60*24;
 x <- minPerDay*as.numeric(times(dT$Time))
 x[day2_idx] <- x[day2_idx] + minPerDay 
 
+
 # Open the PNG graphics device
 png("plot3.png",width=480,height=480,bg="transparent")
+
 
 # Plot of sub metering 1 vs. time
 plot(x,dT$Sub_metering_1,
@@ -94,7 +78,7 @@ plot(x,dT$Sub_metering_1,
 
 
 # Add sub metering 2 to the existing plot
-lines(x,dT$Sub_metering_2/5, col = "red")
+lines(x,dT$Sub_metering_2, col = "red")
 
 
 # Add submetering 3 to the existing plot
@@ -107,6 +91,7 @@ dayLabel <- c(weekdays(as.Date(c(datesList,as.Date(datesList[2])+2),'%Y-%m-%d'))
 axis(1, at = c(1,minPerDay+1,length(x)), labels = dayLabel)
 
 
+# Add a title to the plot
 title("Energy Sub Metering \n Janurary 1, 2007 - Janurary 2, 2007")
 
 

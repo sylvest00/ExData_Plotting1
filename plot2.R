@@ -5,14 +5,9 @@
 #     plot2.R loads a UCI data set that contains information about power consumption of one
 #     household and generates a plot of global active power vs. day from January 1-2 in 2007.
 #
-#     As described on the UCI website, global active power is in kilowatts. The data set
-#     ranges from 74-3692 kilowatts. However, the data in the "target" figure posted by
-#     the course instructors is divided by 500.The data here was also divied by 500 in
-#     order to match their work.
-#
 #     Libraries required: chron
 #
-#     github/sylvest00, 2015
+#     github/sylvest00, 2016
 ###########################################################################################
 
 
@@ -24,7 +19,7 @@ graphics.off()
 library(chron)
 
 # Read in power consumption table
-dataTableOriginal <- read.table("household_power_consumption.txt", sep=";",header=TRUE)
+dataTableOriginal <- read.table("household_power_consumption.txt", sep=";",header=TRUE, stringsAsFactors = FALSE)
 dT <- dataTableOriginal
 
 # convert date objects to characters
@@ -38,8 +33,7 @@ idx <- sort(idx)
 dT <- dT[idx,]
 
 
-# Adjust to match range of instructor figure
-dT$Global_active_power <- as.numeric(dT$Global_active_power)/500
+dT$Global_active_power <- as.numeric(dT$Global_active_power)
 
 
 # Generate x values so that the data is ordered properly and the
@@ -60,7 +54,7 @@ plot(x,dT$Global_active_power,
      main = "Global Active Power \n January 1, 2007 - Janurary 2, 2007",
      xlab = "Day",
      xaxt = "n",
-     ylab = "Global Acive Power (Kilowatts /500)"
+     ylab = "Global Acive Power (Kilowatts)"
 )
 
 
