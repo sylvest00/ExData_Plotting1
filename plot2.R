@@ -51,6 +51,8 @@ day1_idx <- which(dT$Date == "2007-02-01")
 day2_idx <- which(dT$Date == "2007-02-02")
 x[day2_idx] <- x[day2_idx] + minPerDay
 
+# Open PNG graphics device
+png("plot2.png",width=480,height=480,bg="transparent")
 
 # Plot global active power vs. time
 plot(x,dT$Global_active_power,
@@ -69,5 +71,4 @@ axis(1, at = c(1,minPerDay+1,length(x)), labels = dayLabel)
 
 
 # Save figure as a PNG
-dev.copy(png,'plot2.png',width=480,height=480)
 dev.off()

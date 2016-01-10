@@ -34,6 +34,8 @@ idx <- cbind(day1_idx, day2_idx)
 idx <- sort(idx)
 dT <- dT[idx,]
 
+# Open PNG graphics device
+png("plot1.png",width=480,height=480,bg="transparent")
 
 # Generate histogram using the base plot function 'hist'
 hist(as.numeric(dT$Global_active_power)/500,
@@ -47,5 +49,4 @@ hist(as.numeric(dT$Global_active_power)/500,
      breaks = c(seq(0,8,0.5)))
 
 # Save as a png
-dev.copy(png,'plot1.png',width=480,height=480)
 dev.off()
